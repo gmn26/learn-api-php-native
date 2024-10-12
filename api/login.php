@@ -16,6 +16,16 @@
         );
     }
 
+    if($datas === []){
+        echo json_encode([
+            'res' => '200',
+            'data' => null,
+            'message' => 'Login failed',
+            'status' => 'FAILED'
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+
     echo json_encode([
         'res' => '200',
         'data' => $datas,
