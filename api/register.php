@@ -7,7 +7,7 @@
 
     $check = $conn->query("SELECT * FROM users WHERE username='$username'");
 
-    if($check){
+    if($check->num_rows > 0){
         echo json_encode(
             [
                 'res' => '400',
