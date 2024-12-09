@@ -1,5 +1,6 @@
 <?php
     include "./connect.php";
+    header('Content-Type: application/json');
 
     if($_SERVER['REQUEST_METHOD'] === 'GET'){
         $query = $conn->query("SELECT * FROM categories");
@@ -8,6 +9,7 @@
         
         foreach($query as $i => $data){
             $datas[] = array(
+                'id' => $data['id'],
                 'name' => $data['name'],
             );
         }
@@ -67,5 +69,26 @@
                 'message' => 'Category saved'
             ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         }
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'DELETE'){
+        $id = $_GET["id"];
+
+        $del = $conn->query("DELETE FROM categories WHERE id='$id'");
+
+        if(mysqli_affected_rows($conn) == 0){
+            echo json_encode([
+                'res' => '404',
+                'status' => 'NOT FOUNDED',
+                'message' => 'Data not found'
+            ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        echo json_encode([
+            'res' => '200',
+            'status' => 'SUCCEED',
+            'message' => 'Deleted succesfully'
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 ?>

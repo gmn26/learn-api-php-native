@@ -20,7 +20,7 @@ function fetch() {
                         ${item.name}
                         </td>
                         <td>
-                        Tombol
+                        <button id="${item.id}" onclick="deleteItem(this.id)">Delete</button>
                         </td>
                         `);
                 });
@@ -32,22 +32,36 @@ function fetch() {
     });
 }
 
-$("#add_category").click(function () {
-    const name = $("#name").val();
+// $("#add_category").click(function () {
+//     const name = $("#name").val();
+//     $.ajax({
+//         url: "http://learn-api-php-native.test/api/categories.php",
+//         method: "POST",
+//         data: {
+//             "nama": name,
+//         },
+//         success: (resp) => {
+//             console.log(resp);
+//         },
+//         error: (resp) => {
+//             console.log(resp);
+//         }
+//     })
+// })
+
+function deleteItem(id) {
     $.ajax({
-        url: "http://learn-api-php-native.test/api/categories.php",
-        method: "POST",
-        data: {
-            "nama": name,
-        },
+        url: `http://learn-api-php-native.test/api/categories.php?id=${id}`,
+        method: "DELETE",
         success: (resp) => {
-            console.log(resp);
+            alert("Berhasil hapus data");
+            fetch();
         },
         error: (resp) => {
-            console.log(resp);
+            alert("Gagal hapus data");
         }
     })
-})
+}
 
 $(document).ready(() => {
     fetch();
