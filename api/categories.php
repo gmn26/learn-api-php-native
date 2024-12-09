@@ -33,13 +33,13 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $json_input = file_get_contents('php://input');
         $decoded_input = json_decode($json_input, true);
-        if($decoded_input["name"] == null){
+        if(!$decoded_input["name"]){
             echo json_encode(
                 [
                     'res' => '401',
                     'message' => 'Wrong input',
                     'status' => 'FAILED'
-                ]
+                ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
             );
             exit();
         }
@@ -54,8 +54,8 @@
                 [
                     'res' => '400',
                     'message' => 'Category already exist',
-                    'status' => 'FAILED'
-                ]
+                    'status' => 'Duplicate data'
+                ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
             );
             exit();
         }
